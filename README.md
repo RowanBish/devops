@@ -24,3 +24,5 @@ Sem_Demo
 [![LICENSE](https://img.shields.io/github/license/RowanBIsh/devops.svg?style=flat-square)](https://github.com/RowanBIsh/devops/blob/master/LICENSE)
 
 [![Releases](https://img.shields.io/github/release/RowanBIsh/devops/all.svg?style=flat-square)](https://github.com/RowanBIsh/devops/releases)
+
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/RowanBIsh/devops/main.yml)
