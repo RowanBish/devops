@@ -1,4 +1,4 @@
 FROM openjdk:latest
-COPY ./target/classes/com /tmp/com
+COPY .0.1.0.2 0.1-alpha-2jar-with-dependencies.jar
 WORKDIR /tmp
-ENTRYPOINT ["java", "com.napier.sem.App"]
+ENTRYPOINT ["java", "0.1.0.2 (0.1-alpha-2"]
