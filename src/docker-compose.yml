@@ -1,12 +1,44 @@
-version: '3'
+version: '3.8'
 services:
-  # Application Dockerfile is in same folder which is .
   app:
     build: .
+    container_name: se-methods-app
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    # Add these lines to ensure app waits for db
+    command: >
+      sh -c "
+      echo 'Waiting for database to be ready...'
+      while ! nc -z db 3306; do
+        sleep 2
+      done
+      echo 'Database is ready! Starting application...'
+      java -jar app.jar
+      "
 
-  # db is is db folder
   db:
-    build: db/.
+    build:
+      context: test_db
+      dockerfile: Dockerfile
+    container_name: se-methods-db
     restart: always
     ports:
-      - "33060:3306"
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=example
+      - MYSQL_DATABASE=employees
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pexample"]
+      timeout: 20s
+      retries: 10
+      start_period: 40s
+      interval: 10s
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
